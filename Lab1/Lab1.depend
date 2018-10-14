@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1539536995 source:d:\cga\lab1\main.cpp
+1539545579 source:d:\cga\lab1\main.cpp
 	<tchar.h>
 	<windows.h>
 	<vector>
