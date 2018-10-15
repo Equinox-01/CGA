@@ -10,6 +10,7 @@
 #include <string>
 #include <algorithm>
 #include <iostream>
+#include <time.h>
 
 #define PI 3.141593
 
@@ -59,7 +60,7 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
    hwnd = CreateWindowEx (
              0,                   /* Extended possibilites for variation */
              szClassName,         /* Classname */
-             _T("Lab1 for CGA 551006"),       /* Title Text */
+             _T("Lab1 for CGA 551001"),       /* Title Text */
              WS_OVERLAPPEDWINDOW,//&(~WS_MAXIMIZEBOX), /* default window */
              CW_USEDEFAULT,       /* Windows decides the position */
              CW_USEDEFAULT,       /* where the window ends up on the screen */
@@ -137,15 +138,26 @@ void DrawFigure(HDC hdc)
    double a = GetCoefficient();
    int x0 = (winRect.right - winRect.left - WINDOW_BORDER_SIZE) / 2;
    int y0 = (winRect.bottom - winRect.top - WINDOW_HEADER_SIZE - WINDOW_BORDER_SIZE) / 2;
-   int n = 100000;
+   int n = 5000;
    double h = 2 * PI / n;
    double f = 0;
+   int red = 0, green = 0, blue = 0;
+   COLORREF color = RGB(red, green, blue);
+   srand(time(0));
    for (int i = -n; i < n; i++)
    {
+      if (i % 320 == 0)
+      {
+         red = rand() % 256;
+         green = rand() % 256;
+         blue = rand() % 256;
+         color = RGB(red, green, blue);
+      }
+
       double t = i * 0.001;
       double x = roundl(a*pow(t, 2)/(1+pow(t, 2)));
       double y = roundl(a*pow(t, 3)/(1+pow(t, 2)));
-      SetPixel(hdc, x0 + roundl(x), y0 - roundl(y), 0);
+      SetPixel(hdc, x0 + roundl(x), y0 - roundl(y), color);
       f += h;
    }
     LOGBRUSH LogBrush;
